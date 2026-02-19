@@ -3,13 +3,13 @@ import type { LingoDotDevEngine } from "lingo.dev/sdk"
 // ─── Skip patterns ────────────────────────────────────────────────────────────
 
 const SKIP_PATTERNS = [
-  /^https?:\/\//i,
-  /^ftp:\/\//i,
-  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-  /^\d+(\.\d+)?$/,
-  /^#[0-9a-fA-F]{3,8}$/,
-  /^\d{4}-\d{2}-\d{2}/,
-  /^[a-z0-9-_]+$/,
+  /^https?:\/\//i, // URLs
+  /^ftp:\/\//i, // FTP links
+  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, // email addresses
+  /^\d+(\.\d+)?$/, // numbers (integers and decimals)
+  /^#[0-9a-fA-F]{3,8}$/, // hex colors
+  /^\d{4}-\d{2}-\d{2}/, // dates in YYYY-MM-DD format
+  /^[a-z0-9]*[-_][a-z0-9-_]*$/, // slugs (e.g. "hello-world", "user_123")
 ]
 
 function shouldSkipString(value: string): boolean {

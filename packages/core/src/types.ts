@@ -61,10 +61,18 @@ export interface MangoConfig<Langs extends string[]> {
   api_key: string;
   langs: Langs;
   sourceLang: Langs[number];
+  /** Max items per API request (default: 50, max: 250) */
+  batchSize?: number;
+  /** Target word count per batch (default: 500, max: 2500) */
+  idealBatchItemSize?: number;
 }
 
 // ─── Translate options ────────────────────────────────────────────────────────
 
 export interface TranslateOptions<Excluded extends string> {
   exclude?: Excluded[];
+  /** Prioritize speed over quality */
+  fast?: boolean;
+  /** Progress callback — called with 0–100 as translation progresses */
+  onProgress?: (progress: number) => void;
 }

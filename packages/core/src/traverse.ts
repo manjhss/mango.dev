@@ -3,13 +3,13 @@ import type { LingoDotDevEngine } from "lingo.dev/sdk"
 // ─── Skip patterns ────────────────────────────────────────────────────────────
 
 const SKIP_PATTERNS = [
-  /^https?:\/\//i,                          // URLs
-  /^ftp:\/\//i,                             // FTP URLs
-  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, // emails
-  /^\d+(\.\d+)?$/,                          // pure numbers as strings
-  /^#[0-9a-fA-F]{3,8}$/,                   // hex colors
-  /^\d{4}-\d{2}-\d{2}/,                    // ISO dates
-  /^[a-z0-9-_]+$/,                          // slugs / identifiers
+  /^https?:\/\//i,
+  /^ftp:\/\//i,
+  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+  /^\d+(\.\d+)?$/,
+  /^#[0-9a-fA-F]{3,8}$/,
+  /^\d{4}-\d{2}-\d{2}/,
+  /^[a-z0-9-_]+$/,
 ]
 
 function shouldSkipString(value: string): boolean {
@@ -21,14 +21,11 @@ function shouldSkipString(value: string): boolean {
 
 function isExcluded(path: string, excludePaths: string[]): boolean {
   return excludePaths.some((excluded) => {
-    // exact match
     if (excluded === path) return true
-    // array wildcard: "tags[]" matches "tags[0]", "tags[1]", etc.
     if (excluded.endsWith("[]")) {
       const base = excluded.slice(0, -2)
       if (path.startsWith(`${base}[`)) return true
     }
-    // nested array wildcard: "users[].name" matches "users[0].name"
     if (excluded.includes("[].")) {
       const regex = new RegExp(
         "^" + excluded.replace(/\[\]/g, "\\[\\d+\\]") + "$"
@@ -48,57 +45,38 @@ export async function traverse(
   langs: string[],
   sourceLang: string,
   engine: LingoDotDevEngine,
-  seen: Set<object>
+  seen: Set<object>,
+  fast?: boolean,
+  onProgress?: (progress: number) => void,
 ): Promise<unknown> {
-  // null / undefined / number / boolean → return as-is
   if (value === null || value === undefined) return value
   if (typeof value === "number" || typeof value === "boolean") return value
 
-  // string
+  // string — use batchLocalizeText to translate to all langs in one call
   if (typeof value === "string") {
-    // excluded path → return as-is
     if (isExcluded(path, excludePaths)) return value
-    // skip patterns (URLs, emails, dates, slugs…) → return as-is
     if (shouldSkipString(value)) return value
 
-    // translate: call lingo.dev localizeObject for each target lang
     const targetLangs = langs.filter((l) => l !== sourceLang)
-
-    // Build the multilingual map starting with sourceLang
     const result: Record<string, string> = { [sourceLang]: value }
 
     if (targetLangs.length > 0) {
       try {
-        // localizeObject accepts { [key]: string } and returns translated map
-        const translated = await engine.localizeObject(
-          { text: value },
-          { sourceLocale: sourceLang, targetLocale: targetLangs[0] }
-        )
-        // Fill all target langs — lingo.dev returns one locale at a time
-        // so we call it per target lang
-        result[targetLangs[0]] = (translated as Record<string, string>).text ?? value
-
-        // For remaining langs, call separately
-        for (let i = 1; i < targetLangs.length; i++) {
-          const lang = targetLangs[i]
-          try {
-            const t = await engine.localizeObject(
-              { text: value },
-              { sourceLocale: sourceLang, targetLocale: lang }
-            )
-            result[lang] = (t as Record<string, string>).text ?? value
-          } catch {
-            result[lang] = value // fallback to source
-          }
-        }
+        // One API call → all target langs at once
+        const translations = await engine.batchLocalizeText(value, {
+          sourceLocale: sourceLang as never,
+          targetLocales: targetLangs as never[],
+          ...(fast !== undefined && { fast }),
+        })
+        targetLangs.forEach((lang, i) => {
+          result[lang] = translations[i] ?? value
+        })
       } catch {
-        // fallback: fill all langs with source value
-        for (const lang of targetLangs) {
-          result[lang] = value
-        }
+        targetLangs.forEach((lang) => { result[lang] = value })
       }
     }
 
+    onProgress?.(100)
     return result
   }
 
@@ -107,25 +85,26 @@ export async function traverse(
     if (isExcluded(path, excludePaths)) return value
     const results: unknown[] = []
     for (let i = 0; i < value.length; i++) {
-      const itemPath = `${path}[${i}]`
       results.push(
         await traverse(
           value[i],
-          itemPath,
+          `${path}[${i}]`,
           excludePaths,
           langs,
           sourceLang,
           engine,
-          seen
+          seen,
+          fast,
+          onProgress,
         )
       )
+      onProgress?.(Math.round(((i + 1) / value.length) * 100))
     }
     return results
   }
 
   // object
   if (typeof value === "object") {
-    // circular reference guard
     if (seen.has(value as object)) return value
     seen.add(value as object)
 
@@ -134,8 +113,10 @@ export async function traverse(
       return value
     }
 
+    const keys = Object.keys(value as object)
     const result: Record<string, unknown> = {}
-    for (const key of Object.keys(value as object)) {
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i]
       const childPath = path ? `${path}.${key}` : key
       result[key] = await traverse(
         (value as Record<string, unknown>)[key],
@@ -144,14 +125,16 @@ export async function traverse(
         langs,
         sourceLang,
         engine,
-        seen
+        seen,
+        fast,
+        onProgress,
       )
+      onProgress?.(Math.round(((i + 1) / keys.length) * 100))
     }
 
     seen.delete(value as object)
     return result
   }
 
-  // fallback
   return value
 }

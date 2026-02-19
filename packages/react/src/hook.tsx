@@ -27,14 +27,19 @@ export function useMango<Langs extends string[]>() {
   const context = ctx
 
   /**
-   * Resolves a multilingual field to the current language string.
-   * Falls back to the first lang in the array (sourceLang) if the
-   * current lang is missing.
+   * Resolves any field — translated or not — to a displayable value.
+   *
+   * - Multilingual map → returns field[lang] with fallback to langs[0]
+   * - Primitive (string, number, boolean) → returns as-is
    *
    * @example
-   * t(post.title)  // returns post.title[lang] or post.title[langs[0]]
+   * t(post.title)   // { en: "Hello", hi: "नमस्ते" } → "Hello" or "नमस्ते"
+   * t(post.id)      // 42 → 42
+   * t(post.slug)    // "hello-world" → "hello-world"
    */
-  function t(field: Record<string, string>): string {
+  function t(field: Record<string, string> | string | number | boolean): string | number | boolean {
+    if (field === null || field === undefined) return ""
+    if (typeof field !== "object") return field
     return field[context.lang] ?? field[context.langs[0]] ?? ""
   }
 

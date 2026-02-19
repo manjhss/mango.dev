@@ -12,4 +12,7 @@ export default defineConfig({
   esbuildOptions(options) {
     options.jsx = "automatic"
   },
+  banner: {
+    js: '"use client";',
+  },
 })

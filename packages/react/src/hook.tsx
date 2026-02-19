@@ -24,6 +24,8 @@ export function useMango<Langs extends string[]>() {
     )
   }
 
+  const context = ctx
+
   /**
    * Resolves a multilingual field to the current language string.
    * Falls back to the first lang in the array (sourceLang) if the
@@ -33,17 +35,17 @@ export function useMango<Langs extends string[]>() {
    * t(post.title)  // returns post.title[lang] or post.title[langs[0]]
    */
   function t(field: Record<string, string>): string {
-    return field[ctx.lang] ?? field[ctx.langs[0]] ?? ""
+    return field[context.lang] ?? field[context.langs[0]] ?? ""
   }
 
   return {
     /** Current active language */
-    lang: ctx.lang as Langs[number],
+    lang: context.lang as Langs[number],
     /** Switch to a different language (type-safe — only accepts langs in provider) */
-    setLang: ctx.setLang as (lang: Langs[number]) => void,
+    setLang: context.setLang as (lang: Langs[number]) => void,
     /** Resolve a multilingual field to the current language string */
     t,
     /** All available languages */
-    langs: ctx.langs as Langs,
+    langs: context.langs as Langs,
   }
 }

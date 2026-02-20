@@ -5,7 +5,7 @@ import { BlogPostList } from "@/components/blog-post";
 import { TranslatedPost } from "@/lib/blog-data";
 import { LangSwitcher } from "@/components/lang-switcher";
 import { Separator } from "@/components/ui/separator";
-import { PlaygroundExample } from "@/components/component-example";
+import { PlaygroundExample } from "@/components/playground-example";
 
 export default function Page() {
   // const [posts, setPosts] = useState<TranslatedPost[]>([])

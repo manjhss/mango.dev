@@ -41,8 +41,8 @@ import { LangSwitcher } from "./lang-switcher";
 
 export function PlaygroundExample() {
   return (
-    <main className="min-h-screen mx-auto w-full max-w-5xl min-w-0 content-center items-start space-y-12">
-      <header className="flex items-start justify-between border-b border-dashed pb-4">
+    <main className="min-h-screen mx-auto w-full max-w-5xl min-w-0 content-center items-start space-y-12 p-4">
+      <header className="flex gap-4 items-start justify-between border-b border-dashed pb-4">
         <div>
           <h1 className="text-xl font-medium tracking-tight">Playground</h1>
           <p className="text-muted-foreground text pt-1">

@@ -54,7 +54,7 @@ export function PlaygroundExample({
   const t = useTranslations("playground");
 
   return (
-    <main className="min-h-screen mx-auto w-full max-w-5xl min-w-0 content-center items-start space-y-12 p-4">
+    <main className="min-h-screen mx-auto w-full max-w-5xl min-w-0 flex flex-col justify-between gap-12 p-4">
       <header className="flex gap-4 items-start justify-between border-b border-dashed pb-4">
         <div>
           <h1 className="text-xl font-medium tracking-tight">

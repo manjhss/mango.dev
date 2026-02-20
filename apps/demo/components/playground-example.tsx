@@ -38,28 +38,41 @@ import {
 } from "@hugeicons/core-free-icons";
 import Link from "next/link";
 import { LangSwitcher } from "./lang-switcher";
+import { useTranslations } from "next-intl";
+import { useMango } from "@mango/react";
+import { TranslatedPost } from "@/lib/data";
+import { Skeleton } from "./ui/skeleton";
 
-export function PlaygroundExample() {
+export function PlaygroundExample({
+  posts,
+  loading,
+}: {
+  posts: TranslatedPost[];
+  loading: boolean;
+}) {
+  const t = useTranslations("playground");
+
   return (
     <main className="min-h-screen mx-auto w-full max-w-5xl min-w-0 content-center items-start space-y-12 p-4">
       <header className="flex gap-4 items-start justify-between border-b border-dashed pb-4">
         <div>
-          <h1 className="text-xl font-medium tracking-tight">Playground</h1>
+          <h1 className="text-xl font-medium tracking-tight">
+            {t("header.title")}
+          </h1>
           <p className="text-muted-foreground text pt-1">
-            Try changing the language and toggle the Mango and Lingo.dev switch
-            to see the difference.
+            {t("header.description")}
           </p>
         </div>
         <LangSwitcher />
       </header>
 
       <ExampleWrapper>
-        <CardExample />
-        <FormExample />
+        <CardExample post={posts[0] as TranslatedPost} loading={loading} />
+        {/* <FormExample /> */}
       </ExampleWrapper>
 
       <footer className="text-center text-xs text-muted-foreground border-t border-dashed pt-4">
-        Both powered by{" "}
+        {t("footer.poweredBy")}{" "}
         <Link
           href="https://lingo.dev"
           className="text-foreground hover:underline"
@@ -71,11 +84,20 @@ export function PlaygroundExample() {
   );
 }
 
-function CardExample() {
+function CardExample({
+  post,
+  loading,
+}: {
+  post: TranslatedPost;
+  loading: boolean;
+}) {
+  const { t: m } = useMango();
+  const t = useTranslations("playground.cardExample");
+
   return (
     <Example
-      title="Mango"
-      description="Translates dynamic content from your server."
+      title={t("title")}
+      description={t("description")}
       variant="mango"
       className="items-center justify-center"
     >
@@ -83,15 +105,14 @@ function CardExample() {
         <div className="bg-mango-primary absolute inset-0 z-30 aspect-video opacity-50 mix-blend-color" />
         <img
           src="https://images.unsplash.com/photo-1604076850742-4c7221f3101b?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt="Photo by mymind on Unsplash"
-          title="Photo by mymind on Unsplash"
           className="relative z-20 aspect-video w-full object-cover brightness-60 grayscale"
         />
         <CardHeader>
-          <CardTitle>The Future of Artificial Intelligence</CardTitle>
+          <CardTitle>
+            {loading ? <Skeleton className="h-5 w-3/4" /> : m(post.title)}
+          </CardTitle>
           <CardDescription>
-            AI is reshaping industries — from healthcare to finance, helping
-            humans decide faster, automate more, and uncover insights at scale.
+            {loading ? <DescriptionSkeleton /> : m(post.description)}
           </CardDescription>
         </CardHeader>
         <CardFooter>
@@ -101,7 +122,7 @@ function CardExample() {
               strokeWidth={2}
               data-icon="inline-start"
             />
-            Bookmark
+            {t("card.bookmark")}
           </Button>
           <Badge variant="secondary" className="ml-auto">
             <Link href="https://x.com/manjhss">@manjhss</Link>
@@ -109,6 +130,16 @@ function CardExample() {
         </CardFooter>
       </Card>
     </Example>
+  );
+}
+
+function DescriptionSkeleton() {
+  return (
+    <div className="space-y-1">
+      <Skeleton className="h-4 w-full" />
+      <Skeleton className="h-4 w-2/3" />
+      <Skeleton className="h-4 w-2/4" />
+    </div>
   );
 }
 
@@ -120,24 +151,22 @@ const frameworks = [
   "Astro",
 ] as const;
 
-const roleItems = [
-  { label: "Developer", value: "developer" },
-  { label: "Designer", value: "designer" },
-  { label: "Manager", value: "manager" },
-  { label: "Other", value: "other" },
-];
-
 function FormExample() {
+  const t = useTranslations("playground.formExample");
+
+  const roleItems = [
+    { label: t("card.fields.role.items.developer"), value: "developer" },
+    { label: t("card.fields.role.items.designer"), value: "designer" },
+    { label: t("card.fields.role.items.manager"), value: "manager" },
+    { label: t("card.fields.role.items.other"), value: "other" },
+  ];
+
   return (
-    <Example
-      title="Lingo.dev"
-      description="Translates static content directly."
-      variant="lingo"
-    >
+    <Example title={t("title")} description={t("description")} variant="lingo">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>User Information</CardTitle>
-          <CardDescription>Please fill in your details below</CardDescription>
+          <CardTitle>{t("card.title")}</CardTitle>
+          <CardDescription>{t("card.description")}</CardDescription>
           <CardAction>
             <Button variant="ghost" size="icon">
               <HugeiconsIcon icon={MoreVerticalCircle01Icon} strokeWidth={2} />
@@ -149,16 +178,20 @@ function FormExample() {
             <FieldGroup>
               <div className="grid grid-cols-2 gap-4">
                 <Field>
-                  <FieldLabel htmlFor="small-form-name">Name</FieldLabel>
+                  <FieldLabel htmlFor="small-form-name">
+                    {t("card.fields.name.label")}
+                  </FieldLabel>
                   <Input
                     id="small-form-name"
-                    placeholder="Enter your name"
+                    placeholder={t("card.fields.name.placeholder")}
                     variant="lingo"
                     required
                   />
                 </Field>
                 <Field>
-                  <FieldLabel htmlFor="small-form-role">Role</FieldLabel>
+                  <FieldLabel htmlFor="small-form-role">
+                    {t("card.fields.role.label")}
+                  </FieldLabel>
                   <Select items={roleItems} defaultValue={null}>
                     <SelectTrigger id="small-form-role">
                       <SelectValue />
@@ -177,17 +210,19 @@ function FormExample() {
               </div>
               <Field>
                 <FieldLabel htmlFor="small-form-framework">
-                  Framework
+                  {t("card.fields.framework.label")}
                 </FieldLabel>
                 <Combobox items={frameworks}>
                   <ComboboxInput
                     id="small-form-framework"
-                    placeholder="Select a framework"
+                    placeholder={t("card.fields.framework.placeholder")}
                     variant="lingo"
                     required
                   />
                   <ComboboxContent>
-                    <ComboboxEmpty>No frameworks found.</ComboboxEmpty>
+                    <ComboboxEmpty>
+                      {t("card.fields.framework.empty")}
+                    </ComboboxEmpty>
                     <ComboboxList>
                       {(item) => (
                         <ComboboxItem key={item} value={item}>
@@ -199,19 +234,21 @@ function FormExample() {
                 </Combobox>
               </Field>
               <Field>
-                <FieldLabel htmlFor="small-form-comments">Comments</FieldLabel>
+                <FieldLabel htmlFor="small-form-comments">
+                  {t("card.fields.comments.label")}
+                </FieldLabel>
                 <Textarea
                   id="small-form-comments"
-                  placeholder="Add any additional comments"
+                  placeholder={t("card.fields.comments.placeholder")}
                   variant="lingo"
                 />
               </Field>
               <Field orientation="horizontal">
                 <Button type="submit" variant={"lingo"}>
-                  Submit
+                  {t("card.submit")}
                 </Button>
                 <Button variant="outline" type="button">
-                  Cancel
+                  {t("card.cancel")}
                 </Button>
               </Field>
             </FieldGroup>

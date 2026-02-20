@@ -1,8 +1,8 @@
 "use client";
 
-import { useMango } from "@mango/react";
-import { Lang } from "@/lib/constants";
-
+import { useLocale } from "next-intl";
+import { useRouter, usePathname } from "@/i18n/navigation";
+import { routing } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -15,30 +15,42 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Tick02Icon } from "@hugeicons/core-free-icons";
 import { cn } from "@/lib/utils";
+import { useMango } from "@mango/react";
+import { useEffect } from "react";
 
-const LANG_LABELS: Record<Lang, string> = {
+const LANG_LABELS: Record<string, string> = {
   en: "en",
   hi: "hi",
   fr: "fr",
 };
 
 export function LangSwitcher() {
-  const { lang, setLang, langs } = useMango();
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const {lang, setLang} = useMango()
+
+  useEffect(() => {
+    setLang(locale)
+  }, [locale, setLang])
+
+  console.log(lang)
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger render={<Button variant="outline">{lang}</Button>} />
+      <DropdownMenuTrigger render={<Button variant="outline">{locale}</Button>} />
 
       <DropdownMenuContent align="end" className={"mt-1"}>
         <DropdownMenuGroup>
-          {langs.map((l) => (
+          {routing.locales.map((l) => (
             <DropdownMenuItem
               key={l}
               className={cn("font-medium")}
-              onClick={() => setLang(l)}
+              onClick={() => router.replace(pathname, { locale: l })}
             >
-              {LANG_LABELS[l as Lang] ?? l}
-              {lang === l && (
+              {LANG_LABELS[l] ?? l}
+              {locale === l && (
                 <DropdownMenuShortcut>
                   <HugeiconsIcon icon={Tick02Icon} size={18} />
                 </DropdownMenuShortcut>
@@ -50,3 +62,4 @@ export function LangSwitcher() {
     </DropdownMenu>
   );
 }
+

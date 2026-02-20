@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Outfit } from "next/font/google";
 import "./globals.css";
-import { MangoProvider } from "@/components/providers";
-import { LANGS } from "@/lib/constants";
+import { getLocale } from "next-intl/server";
 
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -18,20 +17,19 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Mango — Multilingual Blog",
-  description: "A demo of the Mango translation library powering a multilingual blog.",
+  description: "A demo of the Mango translation library powering a multilingual.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
   return (
-    <html lang="en" className={outfit.variable}>
+    <html lang={locale} className={outfit.variable}>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <MangoProvider langs={[...LANGS]} defaultLang="en">
-          {children}
-        </MangoProvider>
+        {children}
       </body>
     </html>
   );

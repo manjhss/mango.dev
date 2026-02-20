@@ -1,0 +1,52 @@
+{
+  "playground": {
+    "header": {
+      "title": "Terrain de jeu",
+      "description": "Essayez de changer la langue et activez le commutateur Mango pour voir la différence."
+    },
+    "footer": {
+      "poweredBy": "deux propulsés par"
+    },
+    "cardExample": {
+      "title": "Mango",
+      "description": "Traduit le contenu dynamique depuis votre serveur.",
+      "card": {
+        "bookmark": "Marquer"
+      }
+    },
+    "formExample": {
+      "title": "Lingo.dev",
+      "description": "Traduit le contenu statique directement.",
+      "card": {
+        "title": "Informations utilisateur",
+        "description": "Veuillez remplir vos informations ci-dessous",
+        "fields": {
+          "name": {
+            "label": "Nom",
+            "placeholder": "Entrez votre nom"
+          },
+          "role": {
+            "label": "Rôle",
+            "items": {
+              "developer": "Développeur",
+              "designer": "Designer",
+              "manager": "Manager",
+              "other": "Autre"
+            }
+          },
+          "framework": {
+            "label": "Framework",
+            "placeholder": "Sélectionnez un framework",
+            "empty": "Aucun framework trouvé."
+          },
+          "comments": {
+            "label": "Commentaires",
+            "placeholder": "Ajoutez des commentaires supplémentaires"
+          }
+        },
+        "submit": "Soumettre",
+        "cancel": "Annuler"
+      }
+    }
+  }
+}

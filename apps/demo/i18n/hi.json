@@ -1,0 +1,52 @@
+{
+  "playground": {
+    "header": {
+      "title": "प्लेग्राउंड",
+      "description": "भाषा बदलें और अंतर देखने के लिए Mango स्विच को टॉगल करें।"
+    },
+    "footer": {
+      "poweredBy": "संचालित हैं"
+    },
+    "cardExample": {
+      "title": "Mango",
+      "description": "आपके सर्वर से डायनामिक कंटेंट का अनुवाद करता है।",
+      "card": {
+        "bookmark": "बुकमार्क"
+      }
+    },
+    "formExample": {
+      "title": "Lingo.dev",
+      "description": "स्टैटिक कंटेंट का सीधे अनुवाद करता है।",
+      "card": {
+        "title": "उपयोगकर्ता जानकारी",
+        "description": "कृपया नीचे अपना विवरण भरें",
+        "fields": {
+          "name": {
+            "label": "नाम",
+            "placeholder": "अपना नाम दर्ज करें"
+          },
+          "role": {
+            "label": "भूमिका",
+            "items": {
+              "developer": "डेवलपर",
+              "designer": "डिज़ाइनर",
+              "manager": "मैनेजर",
+              "other": "अन्य"
+            }
+          },
+          "framework": {
+            "label": "फ्रेमवर्क",
+            "placeholder": "एक फ्रेमवर्क चुनें",
+            "empty": "कोई फ्रेमवर्क नहीं मिला।"
+          },
+          "comments": {
+            "label": "टिप्पणियाँ",
+            "placeholder": "कोई अतिरिक्त टिप्पणी जोड़ें"
+          }
+        },
+        "submit": "सबमिट करें",
+        "cancel": "रद्द करें"
+      }
+    }
+  }
+}

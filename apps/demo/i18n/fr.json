@@ -5,7 +5,8 @@
       "description": "Essayez de changer la langue et activez le commutateur Mango pour voir la différence."
     },
     "footer": {
-      "poweredBy": "deux propulsés par"
+      "builtBy": "Construit par",
+      "poweredBy": "Propulsé par"
     },
     "cardExample": {
       "title": "Mango",

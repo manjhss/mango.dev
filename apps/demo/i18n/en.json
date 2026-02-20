@@ -5,6 +5,7 @@
       "description": "Try changing the language and toggle the Mango switch to see the difference."
     },
     "footer": {
+      "builtBy": "Built by",
       "poweredBy": "Powered by"
     },
     "cardExample": {

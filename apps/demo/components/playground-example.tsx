@@ -57,10 +57,10 @@ export function PlaygroundExample({
     <main className="min-h-screen mx-auto w-full max-w-5xl min-w-0 flex flex-col justify-between gap-12 p-4">
       <header className="flex gap-4 items-start justify-between border-b border-dashed pb-4">
         <div>
-          <h1 className="text-xl font-medium tracking-tight">
+          <h1 className="text-xl font-medium">
             {t("header.title")}
           </h1>
-          <p className="text-muted-foreground text pt-1">
+          <p className="text-muted-foreground pt-1">
             {t("header.description")}
           </p>
         </div>
@@ -73,10 +73,19 @@ export function PlaygroundExample({
       </ExampleWrapper>
 
       <footer className="text-center text-xs text-muted-foreground border-t border-dashed pt-4">
+        {t("footer.builtBy")}{" "}
+        <Link
+          href="https://lingo.dev"
+          target="_blank"
+          className="font-medium underline underline-offset-3"
+        >
+          manjhss
+        </Link>{", "}
         {t("footer.poweredBy")}{" "}
         <Link
           href="https://lingo.dev"
-          className="text-foreground hover:underline"
+          target="_blank"
+          className="font-medium underline underline-offset-3"
         >
           Lingo.dev
         </Link>

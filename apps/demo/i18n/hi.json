@@ -5,6 +5,7 @@
       "description": "भाषा बदलें और अंतर देखने के लिए Mango स्विच को टॉगल करें।"
     },
     "footer": {
+      "builtBy": "द्वारा निर्मित",
       "poweredBy": "संचालित हैं"
     },
     "cardExample": {

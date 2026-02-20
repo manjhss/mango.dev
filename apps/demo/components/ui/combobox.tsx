@@ -51,6 +51,7 @@ function ComboboxClear({ className, ...props }: ComboboxPrimitive.Clear.Props) {
 }
 
 function ComboboxInput({
+  variant,
   className,
   children,
   disabled = false,
@@ -58,11 +59,12 @@ function ComboboxInput({
   showClear = false,
   ...props
 }: ComboboxPrimitive.Input.Props & {
+  variant?: "mango" | "lingo",
   showTrigger?: boolean
   showClear?: boolean
 }) {
   return (
-    <InputGroup className={cn("w-auto", className)}>
+    <InputGroup variant={variant} className={cn("w-auto", className)}>
       <ComboboxPrimitive.Input
         render={<InputGroupInput disabled={disabled} />}
         {...props}
@@ -82,7 +84,7 @@ function ComboboxInput({
       </InputGroupAddon>
       {children}
     </InputGroup>
-  )
+  );
 }
 
 function ComboboxContent({

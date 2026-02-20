@@ -29,7 +29,7 @@ export function LangSwitcher() {
     <DropdownMenu>
       <DropdownMenuTrigger render={<Button variant="outline">{lang}</Button>} />
 
-      <DropdownMenuContent align="center" className={"mt-1"}>
+      <DropdownMenuContent align="end" className={"mt-1"}>
         <DropdownMenuGroup>
           {langs.map((l) => (
             <DropdownMenuItem

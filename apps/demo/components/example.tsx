@@ -2,8 +2,22 @@ import { cn } from "@/lib/utils";
 
 import { Switch } from "@/components/ui/switch";
 
-export function Switcher({ variant }: { variant?: "mango" | "lingo" }) {
-  return <Switch variant={variant} />;
+export function Switcher({
+  variant,
+  checked,
+  onCheckedChange,
+}: {
+  variant?: "mango" | "lingo";
+  checked?: boolean;
+  onCheckedChange?: () => void;
+}) {
+  return (
+    <Switch
+      variant={variant}
+      checked={checked}
+      onCheckedChange={onCheckedChange}
+    />
+  );
 }
 
 function ExampleWrapper({ className, ...props }: React.ComponentProps<"div">) {
@@ -29,12 +43,16 @@ function Example({
   children,
   className,
   containerClassName,
+  checked,
+  onCheckedChange,
   ...props
 }: React.ComponentProps<"div"> & {
   title?: any;
   description?: any;
   variant?: "mango" | "lingo";
   containerClassName?: string;
+  checked?: boolean;
+  onCheckedChange?: () => void;
 }) {
   return (
     <div
@@ -63,7 +81,7 @@ function Example({
           )}
         </div>
 
-        <Switcher variant={variant} />
+        <Switcher variant={variant} checked={checked} onCheckedChange={onCheckedChange} />
       </div>
       <div
         data-slot="example-content"

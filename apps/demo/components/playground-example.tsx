@@ -40,8 +40,9 @@ import Link from "next/link";
 import { LangSwitcher } from "./lang-switcher";
 import { useTranslations } from "next-intl";
 import { useMango } from "@mango/react";
-import { TranslatedPost } from "@/lib/data";
+import { POSTS, TranslatedPost } from "@/lib/data";
 import { Skeleton } from "./ui/skeleton";
+import { useZMango } from "@/store/mango";
 
 export function PlaygroundExample({
   posts,
@@ -91,6 +92,8 @@ function CardExample({
   post: TranslatedPost;
   loading: boolean;
 }) {
+  const { isActive, toggleActive } = useZMango();
+
   const { t: m } = useMango();
   const t = useTranslations("playground.cardExample");
 
@@ -100,6 +103,8 @@ function CardExample({
       description={t("description")}
       variant="mango"
       className="items-center justify-center"
+      checked={isActive}
+      onCheckedChange={toggleActive}
     >
       <Card className="relative w-full max-w-sm overflow-hidden pt-0">
         <div className="bg-mango-primary absolute inset-0 z-30 aspect-video opacity-50 mix-blend-color" />
@@ -109,10 +114,26 @@ function CardExample({
         />
         <CardHeader>
           <CardTitle>
-            {loading ? <Skeleton className="h-5 w-3/4" /> : m(post.title)}
+            {isActive ? (
+              loading ? (
+                <Skeleton className="h-5 w-3/4" />
+              ) : (
+                m(post.title)
+              )
+            ) : (
+              `${POSTS[0].title}`
+            )}
           </CardTitle>
           <CardDescription>
-            {loading ? <DescriptionSkeleton /> : m(post.description)}
+            {isActive ? (
+              loading ? (
+                <DescriptionSkeleton />
+              ) : (
+                m(post.description)
+              )
+            ) : (
+              `${POSTS[0].description}`
+            )}
           </CardDescription>
         </CardHeader>
         <CardFooter>

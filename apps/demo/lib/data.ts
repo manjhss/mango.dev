@@ -1,4 +1,4 @@
-import type { Translated } from "@mango/core";
+import type { Translated } from "@mango.dev/core";
 import type { Lang } from "@/lib/constants";
 
 // post shape

@@ -39,7 +39,7 @@ import {
 import Link from "next/link";
 import { LangSwitcher } from "./lang-switcher";
 import { useTranslations } from "next-intl";
-import { useMango } from "@mango/react";
+import { useMango } from "@mango.dev/react";
 import { POSTS, TranslatedPost } from "@/lib/data";
 import { Skeleton } from "./ui/skeleton";
 import { useZMango } from "@/store/mango";

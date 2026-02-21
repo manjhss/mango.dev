@@ -27,11 +27,11 @@ importers:
         specifier: ^1.1.5
         version: 1.1.5(react@19.2.3)
       '@mango.dev/core':
-        specifier: workspace:*
-        version: link:../../packages/core
+        specifier: ^0.1.0
+        version: 0.1.0(@types/node@20.19.33)(@types/react@19.2.14)(next@16.1.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
       '@mango.dev/react':
-        specifier: workspace:*
-        version: link:../../packages/react
+        specifier: ^0.1.0
+        version: 0.1.0(@types/node@20.19.33)(@types/react@19.2.14)(next@16.1.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -1031,6 +1031,15 @@ packages:
 
   '@lingo.dev/_spec@0.47.1':
     resolution: {integrity: sha512-heBlHvo9OypK2q3pfpUBjuhDZwkWWnD3qSo1w1G5zXK6UYgmyuNnAcKb8shiuundC0SzF5llEAruQaANKpwHvw==}
+
+  '@mango.dev/core@0.1.0':
+    resolution: {integrity: sha512-YTGsNU4VcFZvXVTELPPL9seDL8syi/+pGFczwBLj+HEAUhTOwYaPNlw1PjoLuzYmxz/jmBK21aAMWNBxMcf+Fg==}
+
+  '@mango.dev/react@0.1.0':
+    resolution: {integrity: sha512-t1xac6xSW+yrPVyiwei2myxIqKP0USnpM39pZrGjSA4/6W/wbR7gAqqD5nRce0TKqIN72JsI2RdMDVWaLfQttA==}
+    peerDependencies:
+      react: '>=18'
+      react-dom: '>=18'
 
   '@markdoc/markdoc@0.5.4':
     resolution: {integrity: sha512-36YFNlqFk//gVNGm5xZaTWVwbAVF2AOmVjf1tiUrS6tCoD/YSkVy2E3CkAfhc5MlKcjparL/QFHCopxL4zRyaQ==}
@@ -6291,6 +6300,44 @@ snapshots:
     dependencies:
       '@lingo.dev/_locales': 0.3.3
       zod: 4.1.12
+
+  '@mango.dev/core@0.1.0(@types/node@20.19.33)(@types/react@19.2.14)(next@16.1.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))':
+    dependencies:
+      lingo.dev: 0.131.6(@types/node@20.19.33)(@types/react@19.2.14)(encoding@0.1.13)(next@16.1.6(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
+    transitivePeerDependencies:
+      - '@biomejs/wasm-bundler'
+      - '@biomejs/wasm-web'
+      - '@cfworker/json-schema'
+      - '@types/node'
+      - '@types/react'
+      - babel-plugin-macros
+      - bufferutil
+      - canvas
+      - encoding
+      - next
+      - react-devtools-core
+      - supports-color
+      - utf-8-validate
+
+  '@mango.dev/react@0.1.0(@types/node@20.19.33)(@types/react@19.2.14)(next@16.1.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      '@mango.dev/core': 0.1.0(@types/node@20.19.33)(@types/react@19.2.14)(next@16.1.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+    transitivePeerDependencies:
+      - '@biomejs/wasm-bundler'
+      - '@biomejs/wasm-web'
+      - '@cfworker/json-schema'
+      - '@types/node'
+      - '@types/react'
+      - babel-plugin-macros
+      - bufferutil
+      - canvas
+      - encoding
+      - next
+      - react-devtools-core
+      - supports-color
+      - utf-8-validate
 
   '@markdoc/markdoc@0.5.4(@types/react@19.2.14)(react@19.2.3)':
     optionalDependencies:

@@ -15,7 +15,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Tick02Icon } from "@hugeicons/core-free-icons";
 import { cn } from "@/lib/utils";
-import { useMango } from "@mango/react";
+import { useMango } from "@mango.dev/react";
 import { useEffect } from "react";
 
 const LANG_LABELS: Record<string, string> = {

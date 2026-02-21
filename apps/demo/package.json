@@ -9,8 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@mango/core": "workspace:*",
-    "@mango/react": "workspace:*",
+    "@mango.dev/core": "^0.1.0",
+    "@mango.dev/react": "^0.1.0",
     "@base-ui/react": "^1.2.0",
     "@hugeicons/core-free-icons": "^3.1.1",
     "@hugeicons/react": "^1.1.5",

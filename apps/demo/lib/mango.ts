@@ -1,4 +1,4 @@
-import { Mango } from "@mango/core"
+import { Mango } from "@mango.dev/core"
 import { LANGS } from "./constants"
 
 // Server-side only — API key never sent to client

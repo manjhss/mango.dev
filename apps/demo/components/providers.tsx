@@ -1,6 +1,6 @@
 "use client"
 
-import { MangoProvider as MangoProviderInner } from "@mango/react"
+import { MangoProvider as MangoProviderInner } from "@mango.dev/react"
 
 interface MangoProviderProps<Langs extends string[]> {
   langs: Langs

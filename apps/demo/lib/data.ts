@@ -27,6 +27,18 @@ export const POSTS: Post[] = [
     description:
       "Open source is no longer just a movement — it powers the internet, drives innovation, and gives developers the freedom to build without boundaries.",
   },
+  {
+    username: "nora",
+    title: "The Rise of Sustainable Technology",
+    description:
+      "Sustainable tech is transforming energy, agriculture, and cities — helping reduce emissions, optimize resources, and build a cleaner, smarter future.",
+  },
+  {
+    username: "leo",
+    title: "The Power of Data in Decision Making",
+    description:
+      "Data-driven thinking is guiding modern organizations — enabling smarter strategies, better predictions, and clearer understanding of complex problems.",
+  },
 ];
 
 export const TRANSLATED_POSTS: TranslatedPost[] = [
@@ -54,6 +66,32 @@ export const TRANSLATED_POSTS: TranslatedPost[] = [
       en: "Open source is no longer just a movement — it powers the internet, drives innovation, and gives developers the freedom to build without boundaries.",
       hi: "ओपन सोर्स अब केवल एक आंदोलन नहीं है — यह इंटरनेट को शक्ति देता है, नवाचार को गति देता है और डेवलपर्स को बिना सीमाओं के बनाने की स्वतंत्रता देता है।",
       fr: "L'open source n'est plus seulement un mouvement — il alimente internet, stimule l'innovation et offre aux développeurs la liberté de créer sans limites.",
+    },
+  },
+  {
+    username: "nora",
+    title: {
+      en: "The Rise of Sustainable Technology",
+      hi: "सस्टेनेबल टेक्नोलॉजी का उदय",
+      fr: "L'essor des technologies durables",
+    },
+    description: {
+      en: "Sustainable tech is transforming energy, agriculture, and cities — helping reduce emissions, optimize resources, and build a cleaner, smarter future.",
+      hi: "सस्टेनेबल टेक ऊर्जा, कृषि और शहरों को बदल रहा है — उत्सर्जन घटाने, संसाधनों का बेहतर उपयोग करने और स्वच्छ, स्मार्ट भविष्य बनाने में मदद कर रहा है।",
+      fr: "La technologie durable transforme l'énergie, l'agriculture et les villes — aidant à réduire les émissions, optimiser les ressources et bâtir un avenir plus propre et intelligent.",
+    },
+  },
+  {
+    username: "leo",
+    title: {
+      en: "The Power of Data in Decision Making",
+      hi: "निर्णय लेने में डेटा की शक्ति",
+      fr: "La puissance des données dans la prise de décision",
+    },
+    description: {
+      en: "Data-driven thinking is guiding modern organizations — enabling smarter strategies, better predictions, and clearer understanding of complex problems.",
+      hi: "डेटा-आधारित सोच आधुनिक संगठनों का मार्गदर्शन कर रही है — बेहतर रणनीतियाँ, सटीक भविष्यवाणियाँ और जटिल समस्याओं की स्पष्ट समझ संभव बना रही है।",
+      fr: "La réflexion basée sur les données guide les organisations modernes — permettant des stratégies plus intelligentes, de meilleures prédictions et une compréhension claire des problèmes complexes.",
     },
   },
 ];

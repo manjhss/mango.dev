@@ -35,6 +35,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import {
   MoreVerticalCircle01Icon,
   BookmarkAdd02Icon,
+  ArrowLeft01Icon,
 } from "@hugeicons/core-free-icons";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
@@ -43,6 +44,7 @@ import { Post, POSTS, TranslatedPost } from "@/lib/data";
 import { Skeleton } from "./ui/skeleton";
 import { useZMango } from "@/store/mango";
 import { Toolbar } from "./toolbar";
+import { useRouter } from "next/navigation";
 
 export function BlogExample({
   posts,
@@ -51,17 +53,27 @@ export function BlogExample({
   posts: TranslatedPost[];
   loading: boolean;
 }) {
+  const router = useRouter();
+
   const { isActive } = useZMango();
   const t = useTranslations("playground");
 
   const postsToShow = isActive ? posts : POSTS;
 
   return (
-    <main className="min-h-screen mx-auto w-full max-w-5xl min-w-0 flex flex-col justify-between gap-12 p-4">
+    <main className="min-h-screen mx-auto w-full max-w-5xl min-w-0 flex flex-col gap-8 p-4">
+      <button
+        onClick={() => router.back()}
+        className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+      >
+        <HugeiconsIcon icon={ArrowLeft01Icon} size={16} strokeWidth={2} />
+        Back
+      </button>
+
       <header className="flex flex-col gap-4 sm:flex-row items-start justify-between border-b border-dashed pb-4">
         <div>
-          <h1 className="text-xl font-medium">
-            <span className="text-2xl">🥭</span> {t("header.title")}
+          <h1 className="text-2xl font-bold tracking-tight">
+            <span className="text-3xl">🥭</span> {t("header.title")}
           </h1>
           <p className="text-muted-foreground pt-1">
             {t("header.description")}
@@ -76,7 +88,7 @@ export function BlogExample({
         ))}
       </ExampleWrapper>
 
-      <footer className="text-center text-xs text-muted-foreground border-t border-dashed pt-4">
+      <footer className="text-center text-xs text-muted-foreground">
         {t("footer.builtBy")}{" "}
         <Link
           href="https://x.com/manjhss"

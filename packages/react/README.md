@@ -1,6 +1,6 @@
-# @mango/react
+# @mango.dev/react
 
-React bindings for `@mango/core` — provides a context provider and hook to read and switch languages in your React app.
+React bindings for `@mango.dev/core` — provides a context provider and hook to read and switch languages in your React app.
 
 ## Features
 
@@ -15,13 +15,13 @@ React bindings for `@mango/core` — provides a context provider and hook to rea
 
 ```bash
 # npm
-npm install @mango/react @mango/core
+npm install @mango.dev/react @mango.dev/core
 
 # pnpm
-pnpm add @mango/react @mango/core
+pnpm add @mango.dev/react @mango.dev/core
 
 # yarn
-yarn add @mango/react @mango/core
+yarn add @mango.dev/react @mango.dev/core
 ```
 
 **Peer dependencies:** `react >= 18`, `react-dom >= 18`
@@ -33,7 +33,7 @@ yarn add @mango/react @mango/core
 The `langs` array **must match exactly** what you passed to `new Mango({ langs })` in your backend/server code.
 
 ```tsx
-import { MangoProvider } from "@mango/react";
+import { MangoProvider } from "@mango.dev/react";
 
 const LANGS = ["en", "es", "fr"] as const;
 
@@ -48,11 +48,11 @@ export default function App() {
 
 ### 2. Render translated fields with `useMango()` — `t()`
 
-Type your component props with `Translated<T>` from `@mango/core` to get full autocomplete on `t()` calls.
+Type your component props with `Translated<T>` from `@mango.dev/core` to get full autocomplete on `t()` calls.
 
 ```tsx
-import { useMango } from "@mango/react";
-import type { Translated } from "@mango/core";
+import { useMango } from "@mango.dev/react";
+import type { Translated } from "@mango.dev/core";
 
 type Post = { title: string; body: string; slug: string };
 type TranslatedPost = Translated<Post, "slug", "en" | "es" | "fr">;
@@ -74,7 +74,7 @@ export function PostCard({ post }: { post: TranslatedPost }) {
 ### 3. Switch languages with `useMango()` — `setLang`
 
 ```tsx
-import { useMango } from "@mango/react";
+import { useMango } from "@mango.dev/react";
 
 export function LanguageSwitcher() {
   const { lang, setLang, langs } = useMango();
@@ -96,7 +96,7 @@ export function LanguageSwitcher() {
 `t()` resolves any field — translated or plain — to a displayable value for the active language.
 
 ```ts
-// Translated field (from @mango/core output)
+// Translated field (from @mango.dev/core output)
 t(post.title)  // { en: "Hello", es: "Hola", fr: "Bonjour" } → "Hello" (if lang is "en")
 
 // Primitive field — returned as-is
@@ -112,7 +112,7 @@ If the active language has no translation, `t()` falls back to the first languag
 
 | Prop          | Type             | Required | Description                                           |
 | ------------- | ---------------- | -------- | ----------------------------------------------------- |
-| `langs`       | `string[]`       | ✅        | All supported languages — must match `@mango/core` config |
+| `langs`       | `string[]`       | ✅        | All supported languages — must match `@mango.dev/core` config |
 | `defaultLang` | `string`         | ✅        | Active language on first render                       |
 | `children`    | `React.ReactNode`| ✅        | Child components                                      |
 

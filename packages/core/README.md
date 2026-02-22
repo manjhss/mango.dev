@@ -1,4 +1,4 @@
-# @mango/core
+# @mango.dev/core
 
 A TypeScript-first library that translates any JavaScript object into multiple languages in one call, powered by [lingo.dev](https://lingo.dev).
 
@@ -16,13 +16,13 @@ A TypeScript-first library that translates any JavaScript object into multiple l
 
 ```bash
 # npm
-npm install @mango/core
+npm install @mango.dev/core
 
 # pnpm
-pnpm add @mango/core
+pnpm add @mango.dev/core
 
 # yarn
-yarn add @mango/core
+yarn add @mango.dev/core
 ```
 
 ## Usage
@@ -30,10 +30,12 @@ yarn add @mango/core
 ### Basic example
 
 ```ts
-import { Mango } from "@mango/core";
+import { Mango } from "@mango.dev/core";
 
+// Get your API key at https://lingo.dev — free Hobby tier is sufficient
+// Store it in an environment variable, never hardcode it
 const mango = new Mango({
-  api_key: "your-lingo-dev-api-key",
+  api_key: process.env.LINGODOTDEV_API_KEY!,
   langs: ["en", "es", "fr", "de"],
   sourceLang: "en",
 });
@@ -129,7 +131,7 @@ const result = await mango.translate(data, { fast: true });
 
 | Option               | Type       | Required | Default | Description                                      |
 | -------------------- | ---------- | -------- | ------- | ------------------------------------------------ |
-| `api_key`            | `string`   | ✅        | —       | Your lingo.dev API key                           |
+| `api_key`            | `string`   | ✅        | —       | Your [lingo.dev](https://lingo.dev) API key — get one free at lingo.dev |
 | `langs`              | `string[]` | ✅        | —       | All languages to translate into (includes source)|
 | `sourceLang`         | `string`   | ✅        | —       | The language of the input data                   |
 | `batchSize`          | `number`   | ❌        | `50`    | Max items per API request (max: 250)             |
@@ -145,7 +147,7 @@ const result = await mango.translate(data, { fast: true });
 
 ## Security
 
-`@mango/core` requires a lingo.dev API key. **Never use it in client-side (browser) code** — the key will be exposed in your JavaScript bundle.
+`@mango.dev/core` requires a lingo.dev API key. **Never use it in client-side (browser) code** — the key will be exposed in your JavaScript bundle.
 
 **Safe patterns:**
 
@@ -154,7 +156,7 @@ const result = await mango.translate(data, { fast: true });
   ```ts
   // app/actions.ts (Next.js server action)
   "use server";
-  import { Mango } from "@mango/core";
+  import { Mango } from "@mango.dev/core";
 
   const mango = new Mango({ api_key: process.env.LINGODOTDEV_API_KEY!, ... });
 

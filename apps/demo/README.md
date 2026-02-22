@@ -1,12 +1,12 @@
-# Mango — Demo App
+# Mango.dev — Demo App
 
-A multilingual blog demo built with [Next.js](https://nextjs.org) showcasing how `@mango/core` and `@mango/react` work together in a real app.
+A multilingual blog demo built with [Next.js](https://nextjs.org) showcasing how `@mango.dev/core` and `@mango.dev/react` work together in a real app.
 
 ## What it demonstrates
 
-- Blog posts translated from English into **Hindi** and **French** using `@mango/core` on the server
+- Blog posts translated from English into **Hindi** and **French** using `@mango.dev/core` on the server
 - URL-based locale routing (`/en`, `/hi`, `/fr`) via [next-intl](https://next-intl.dev)
-- Language switcher synced between next-intl's router and `useMango()` from `@mango/react`
+- Language switcher synced between next-intl's router and `useMango()` from `@mango.dev/react`
 - `t()` rendering translated post fields (`title`, `description`) in the active language
 - API key stays server-side — client only receives the translated data
 
@@ -50,14 +50,14 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000). It redirects to `/en` by default.
 
-## How Mango is wired in
+## How Mango.dev is wired in
 
 ### Server — `lib/mango.ts`
 
 A single `Mango` instance is created server-side using the API key from environment variables:
 
 ```ts
-import { Mango } from "@mango/core"
+import { Mango } from "@mango.dev/core"
 import { LANGS } from "./constants"
 
 export const mg = new Mango({

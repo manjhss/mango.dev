@@ -1,10 +1,10 @@
-# 🥭 Mango
+# 🥭 Mango.dev
 
 A type-safe multilingual translation library powered by [lingo.dev](https://lingo.dev). Translate any JavaScript object into multiple languages in one call — with full TypeScript support.
 
 ## How it works
 
-Mango follows a clear backend/frontend split:
+Mango.dev follows a clear backend/frontend split:
 
 | Backend | Frontend |
 |---|---|
@@ -38,8 +38,8 @@ Mango follows a clear backend/frontend split:
 
 | Package | Description |
 |---|---|
-| [`@mango/core`](./packages/core) | Core translation engine — `Mango` class, types, traversal logic |
-| [`@mango/react`](./packages/react) | React bindings — `MangoProvider`, `useMango()` hook, `t()` helper |
+| [`@mango.dev/core`](./packages/core) | Core translation engine — `Mango` class, types, traversal logic |
+| [`@mango.dev/react`](./packages/react) | React bindings — `MangoProvider`, `useMango()` hook, `t()` helper |
 
 ## Quick Start
 
@@ -47,10 +47,10 @@ Mango follows a clear backend/frontend split:
 
 ```bash
 # npm
-npm install @mango/core @mango/react
+npm install @mango.dev/core @mango.dev/react
 
 # pnpm
-pnpm add @mango/core @mango/react
+pnpm add @mango.dev/core @mango.dev/react
 ```
 
 ### 2. Define a shared languages constant
@@ -66,7 +66,7 @@ export type Lang = typeof LANGS[number] // "en" | "hi" | "fr"
 ### 3. Translate on the server
 
 ```ts
-import { Mango } from "@mango/core"
+import { Mango } from "@mango.dev/core"
 import { LANGS } from "./lib/constants"
 
 const mango = new Mango({
@@ -94,9 +94,9 @@ const translated = await mango.translate(post, {
 ### 4. Display on the client
 
 ```tsx
-import { MangoProvider, useMango } from "@mango/react"
+import { MangoProvider, useMango } from "@mango.dev/react"
 import { LANGS } from "./lib/constants"
-import type { Translated } from "@mango/core"
+import type { Translated } from "@mango.dev/core"
 
 type Post = { id: string; title: string; body: string; author: { name: string; email: string } }
 type TranslatedPost = Translated<Post, "id" | "author.email", Lang>
@@ -131,9 +131,9 @@ function PostView({ post }: { post: TranslatedPost }) {
 
 See individual package docs for full configuration options:
 
-- [`@mango/core` — `MangoConfig`, `TranslateOptions`](./packages/core/README.md#configuration)
-- [`@mango/react` — `MangoProviderProps`, `useMango`](./packages/react/README.md#configuration)
+- [`@mango.dev/core` — `MangoConfig`, `TranslateOptions`](./packages/core/README.md#configuration)
+- [`@mango.dev/react` — `MangoProviderProps`, `useMango`](./packages/react/README.md#configuration)
 
 ## Security
 
-Never use `@mango/core` in client-side (browser) code — the `api_key` will be exposed in your bundle. Always call `mango.translate()` in a server action, API route, or build script. See the [`@mango/core` security guide](./packages/core/README.md#security) for safe patterns.
+Never use `@mango.dev/core` in client-side (browser) code — the `api_key` will be exposed in your bundle. Always call `mango.translate()` in a server action, API route, or build script. See the [`@mango.dev/core` security guide](./packages/core/README.md#security) for safe patterns.

@@ -1,117 +1,40 @@
-# Mango.dev — Demo App
+# apps/demo
 
-A multilingual blog demo built with [Next.js](https://nextjs.org) showcasing how `@mango.dev/core` and `@mango.dev/react` work together in a real app.
+The demo app for Mango.dev — a complete mini-website that introduces the library, guides users through setup, and shows it working live.
 
-## What it demonstrates
+**[Live →](https://mangodotdev.vercel.app)**
 
-- Blog posts translated from English into **Hindi** and **French** using `@mango.dev/core` on the server
-- URL-based locale routing (`/en`, `/hi`, `/fr`) via [next-intl](https://next-intl.dev)
-- Language switcher synced between next-intl's router and `useMango()` from `@mango.dev/react`
-- `t()` rendering translated post fields (`title`, `description`) in the active language
-- API key stays server-side — client only receives the translated data
+## What's inside
 
-## Features
+Three pages, each serving a different purpose:
 
-- **`/api/posts`** — API route that calls `mg.translate()` to translate posts server-side
-- **`MangoProvider`** — wraps the locale layout, supplies language context to all child components
-- **`useMango()`** — used in card components to render translated fields with `t()`
-- **`LangSwitcher`** — dropdown that changes the URL locale and syncs `setLang` from `useMango()`
-- **`TranslatedPost` type** — typed using `Translated<Post, "username", Lang>` for full autocomplete
+- **`/`** — Landing page. Explains what Mango.dev is, lists features, and links to the packages on npm.
+- **`/get-started`** — Integration guide. 7 steps from install to rendering translated content, with a sticky sidebar and copy-button code blocks.
+- **`/blogs`** — Live demo. Blog posts fetched from an API, translated server-side with `mg.translate()`, and rendered with `useMango()`. Switch languages with the toolbar to see it in action.
 
-## Getting Started
+The blogs page is also what makes this more than just docs — it's a real working example of Mango.dev with actual API calls, locale routing via next-intl, and the React layer all wired together.
 
-### 1. Install dependencies
+## Stack
 
-```bash
-pnpm install
-```
+- **Next.js** (App Router) — framework
+- **next-intl** — locale routing and static UI string translations (`/en`, `/hi`, `/fr`)
+- **`@mango.dev/core`** — server-side object translation via `mg.translate()`
+- **`@mango.dev/react`** — `MangoProvider` + `useMango()` + `t()` for client-side rendering
+- **Tailwind CSS** + **base-ui** — styling and headless UI primitives
+- **HugeIcons** — icon set
 
-### 2. Set up environment variables
+## How it's wired
 
-Create a `.env.local` file in this directory:
+The blogs page makes a request to `/api/posts`. That route fetches raw post data and runs it through `mg.translate()` — one call that returns every string field as a multilingual map (`{ en, hi, fr }`). The translated posts are sent to the client.
 
-```bash
-cp .env.example .env.local
-```
+On the client, `MangoProvider` holds the active language. `useMango()` gives components `t()`, which reads `post.title[currentLang]` automatically. The language switcher updates both the next-intl URL locale and the Mango lang state — keeping static UI and dynamic content in sync.
 
-Then add your lingo.dev API key:
+The API key lives only in `.env.local`. The client never sees it.
 
-```env
-LINGODOTDEV_API_KEY=your_api_key_here
-```
+## Pages
 
-> Get your API key at [lingo.dev](https://lingo.dev).
-
-### 3. Run the development server
-
-```bash
-pnpm dev
-```
-
-Open [http://localhost:3000](http://localhost:3000). It redirects to `/en` by default.
-
-## How Mango.dev is wired in
-
-### Server — `lib/mango.ts`
-
-A single `Mango` instance is created server-side using the API key from environment variables:
-
-```ts
-import { Mango } from "@mango.dev/core"
-import { LANGS } from "./constants"
-
-export const mg = new Mango({
-  api_key: process.env.LINGODOTDEV_API_KEY!,
-  langs: [...LANGS],
-  sourceLang: "en",
-})
-```
-
-### API route — `app/api/posts/route.ts`
-
-Posts are translated here and returned to the client:
-
-```ts
-const translated = await mg.translate(
-  { posts },
-  { exclude: ["posts[].username"], fast: true }
-)
-```
-
-> During development, pre-translated mock data (`TRANSLATED_POSTS`) is used to avoid unnecessary API calls.
-
-### Client — `app/[locale]/layout.tsx`
-
-`MangoProvider` wraps every locale page with the same `LANGS`:
-
-```tsx
-<MangoProvider langs={[...routing.locales]} defaultLang={routing.defaultLocale}>
-  {children}
-</MangoProvider>
-```
-
-### Components — `useMango()`
-
-Translated fields are rendered using `t()` from `useMango()`:
-
-```tsx
-const { t } = useMango()
-
-<h2>{t(post.title)}</h2>
-<p>{t(post.description)}</p>
-```
-
-## Configuration
-
-| Variable | Description |
+| Route | Purpose |
 |---|---|
-| `LINGODOTDEV_API_KEY` | Your lingo.dev API key — **server-side only** |
-
-Languages are defined in `lib/constants.ts`:
-
-```ts
-export const LANGS = ["en", "hi", "fr"] as const
-```
-
-To add a new language, add it to `LANGS` and create the corresponding next-intl message file in `i18n/`.
-
+| `/[locale]` | Landing page — what Mango.dev is, features, packages |
+| `/[locale]/get-started` | Step-by-step integration guide |
+| `/[locale]/blogs` | Live demo — blog posts translated in real time via `mg.translate()` |

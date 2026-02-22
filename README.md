@@ -72,7 +72,7 @@ import { Mango } from "@mango.dev/core"
 import { LANGS } from "./lib/constants"
 
 const mango = new Mango({
-  api_key: process.env.LINGO_API_KEY!,  // stays on the server ✅
+  api_key: process.env.LINGODOTDEV_API_KEY!,  // stays on the server ✅
   langs: [...LANGS],
   sourceLang: "en",
 })

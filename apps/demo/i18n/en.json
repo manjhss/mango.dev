@@ -1,12 +1,12 @@
 {
   "playground": {
     "header": {
-      "title": "Playground",
-      "description": "Try changing the language and toggle the Mango switch to see the difference."
+      "title": "BLOGS",
+      "description": "Switch languages to see Mango.dev translate dynamic server data in real time."
     },
     "footer": {
       "builtBy": "Built by",
-      "poweredBy": "Powered by"
+      "for": "for Multilingual Hackathon #2 by"
     },
     "cardExample": {
       "title": "Mango.dev",

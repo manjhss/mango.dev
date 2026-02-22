@@ -29,17 +29,17 @@ export function LangSwitcher() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const {lang, setLang} = useMango()
+  const { setLang } = useMango();
 
   useEffect(() => {
-    setLang(locale)
-  }, [locale, setLang])
-
-  console.log(lang)
+    setLang(locale);
+  }, [locale, setLang]);
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger render={<Button variant="outline">{locale}</Button>} />
+      <DropdownMenuTrigger
+        render={<Button variant="outline">{locale}</Button>}
+      />
 
       <DropdownMenuContent align="end" className={"mt-1"}>
         <DropdownMenuGroup>
@@ -62,4 +62,3 @@ export function LangSwitcher() {
     </DropdownMenu>
   );
 }
-

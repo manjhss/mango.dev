@@ -22,11 +22,11 @@ export function Switcher({
 
 function ExampleWrapper({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <div className="bg-background w-full">
+    <div className="w-full">
       <div
         data-slot="example-wrapper"
         className={cn(
-          "grid gap-8 sm:gap-12 md:gap-8 2xl:max-w-6xl",
+          "grid gap-8 sm:gap-12 md:grid-cols-2 md:gap-8 2xl:max-w-6xl",
 
           className,
         )}
@@ -80,8 +80,6 @@ function Example({
             <div className="text-muted-foreground text-sm">{description}</div>
           )}
         </div>
-
-        <Switcher variant={variant} checked={checked} onCheckedChange={onCheckedChange} />
       </div>
       <div
         data-slot="example-content"

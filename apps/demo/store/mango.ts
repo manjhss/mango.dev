@@ -12,7 +12,7 @@ interface Actions {
 type Store = State & Actions;
 
 const initialState: State = {
-  isActive: false,
+  isActive: true,
 };
 
 export const useZMango = create<Store>()(

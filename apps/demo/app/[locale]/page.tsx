@@ -1,6 +1,6 @@
 "use client";
 
-import { PlaygroundExample } from "@/components/playground-example";
+import { BlogExample } from "@/components/blog-example";
 
 import { TranslatedPost } from "@/lib/data";
 import { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ export default function Page() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/posts", {cache: "force-cache"})
+    fetch("/api/posts", { cache: "force-cache" })
       .then((res) => res.json())
       .then(({ data, status, message }) => {
         if (status === "error") throw new Error(message);
@@ -21,7 +21,7 @@ export default function Page() {
 
   return (
     <main>
-      <PlaygroundExample posts={posts} loading={loading} />
+      <BlogExample posts={posts} loading={loading} />
     </main>
   );
 }

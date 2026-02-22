@@ -1,12 +1,12 @@
 {
   "playground": {
     "header": {
-      "title": "Terrain de jeu",
-      "description": "Essayez de changer la langue et activez le commutateur Mango pour voir la différence."
+      "title": "BLOGS",
+      "description": "Changez de langue pour voir Mango.dev traduire les données dynamiques du serveur en temps réel."
     },
     "footer": {
       "builtBy": "Construit par",
-      "poweredBy": "Propulsé par"
+      "for": "pour Multilingual Hackathon #2 par"
     },
     "cardExample": {
       "title": "Mango.dev",

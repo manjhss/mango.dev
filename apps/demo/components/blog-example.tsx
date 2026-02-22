@@ -37,51 +37,55 @@ import {
   BookmarkAdd02Icon,
 } from "@hugeicons/core-free-icons";
 import Link from "next/link";
-import { LangSwitcher } from "./lang-switcher";
 import { useTranslations } from "next-intl";
 import { useMango } from "@mango.dev/react";
-import { POSTS, TranslatedPost } from "@/lib/data";
+import { Post, POSTS, TranslatedPost } from "@/lib/data";
 import { Skeleton } from "./ui/skeleton";
 import { useZMango } from "@/store/mango";
+import { Toolbar } from "./toolbar";
 
-export function PlaygroundExample({
+export function BlogExample({
   posts,
   loading,
 }: {
   posts: TranslatedPost[];
   loading: boolean;
 }) {
+  const { isActive } = useZMango();
   const t = useTranslations("playground");
+
+  const postsToShow = isActive ? posts : POSTS;
 
   return (
     <main className="min-h-screen mx-auto w-full max-w-5xl min-w-0 flex flex-col justify-between gap-12 p-4">
-      <header className="flex gap-4 items-start justify-between border-b border-dashed pb-4">
+      <header className="flex flex-col gap-4 sm:flex-row items-start justify-between border-b border-dashed pb-4">
         <div>
           <h1 className="text-xl font-medium">
-            {t("header.title")}
+            <span className="text-2xl">🥭</span> {t("header.title")}
           </h1>
           <p className="text-muted-foreground pt-1">
             {t("header.description")}
           </p>
         </div>
-        <LangSwitcher />
+        <Toolbar />
       </header>
 
       <ExampleWrapper>
-        <CardExample post={posts[0] as TranslatedPost} loading={loading} />
-        {/* <FormExample /> */}
+        {postsToShow.map((post) => (
+          <CardExample key={post.username} post={post} loading={loading} />
+        ))}
       </ExampleWrapper>
 
       <footer className="text-center text-xs text-muted-foreground border-t border-dashed pt-4">
         {t("footer.builtBy")}{" "}
         <Link
-          href="https://lingo.dev"
+          href="https://x.com/manjhss"
           target="_blank"
           className="font-medium underline underline-offset-3"
         >
           manjhss
-        </Link>{", "}
-        {t("footer.poweredBy")}{" "}
+        </Link>{" "}
+        {t("footer.for")}{" "}
         <Link
           href="https://lingo.dev"
           target="_blank"
@@ -98,23 +102,22 @@ function CardExample({
   post,
   loading,
 }: {
-  post: TranslatedPost;
+  post: Post | TranslatedPost;
   loading: boolean;
 }) {
-  const { isActive, toggleActive } = useZMango();
-
   const { t: m } = useMango();
   const t = useTranslations("playground.cardExample");
 
+  const isPostTranslated = (
+    post: Post | TranslatedPost,
+  ): post is TranslatedPost => {
+    return (
+      typeof post.title !== "string" && typeof post.description !== "string"
+    );
+  };
+
   return (
-    <Example
-      title={t("title")}
-      description={t("description")}
-      variant="mango"
-      className="items-center justify-center"
-      checked={isActive}
-      onCheckedChange={toggleActive}
-    >
+    <Example variant="mango" className="items-center justify-center">
       <Card className="relative w-full max-w-sm overflow-hidden pt-0">
         <div className="bg-mango-primary absolute inset-0 z-30 aspect-video opacity-50 mix-blend-color" />
         <img
@@ -123,25 +126,25 @@ function CardExample({
         />
         <CardHeader>
           <CardTitle>
-            {isActive ? (
+            {isPostTranslated(post) ? (
               loading ? (
                 <Skeleton className="h-5 w-3/4" />
               ) : (
                 m(post.title)
               )
             ) : (
-              `${POSTS[0].title}`
+              post.title
             )}
           </CardTitle>
           <CardDescription>
-            {isActive ? (
+            {isPostTranslated(post) ? (
               loading ? (
                 <DescriptionSkeleton />
               ) : (
                 m(post.description)
               )
             ) : (
-              `${POSTS[0].description}`
+              post.description
             )}
           </CardDescription>
         </CardHeader>
@@ -155,7 +158,7 @@ function CardExample({
             {t("card.bookmark")}
           </Button>
           <Badge variant="secondary" className="ml-auto">
-            <Link href="https://x.com/manjhss">@manjhss</Link>
+            @{post.username}
           </Badge>
         </CardFooter>
       </Card>

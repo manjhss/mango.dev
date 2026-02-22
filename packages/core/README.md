@@ -187,3 +187,66 @@ Transforms a type so that all non-excluded string fields become `Record<Lang, st
 type Result = Translated<{ title: string; id: string }, "id", "en" | "es">
 // → { title: Record<"en" | "es", string>; id: string }
 ```
+
+## How it works
+
+`mg.translate()` does three things in sequence: **traverse → skip → translate**.
+
+```
+mg.translate({ posts }, { exclude: ["posts[].id"] })
+         |
+         v
++-----------------------------------------------------+
+|                   traverse()                        |
+|                                                     |
+|  walks every node in the object tree recursively    |
+|                                                     |
+|  for each node:                                     |
+|                                                     |
+|  number / boolean -----------------> return as-is   |
+|                                                     |
+|  string                                             |
+|    +-- excluded path? -----------> return as-is     |
+|    +-- URL / email / slug /                         |
+|    |   hex / date / number? ------> return as-is    |
+|    +-- translatable                                 |
+|              |                                      |
+|              v                                      |
+|    engine.batchLocalizeText(value, {                |
+|      sourceLocale: "en",                            |
+|      targetLocales: ["hi", "fr"]  <- one API call   |
+|    })                               per string      |
+|              |                                      |
+|              v                                      |
+|    { en: "...", hi: "...", fr: "..." }              |
+|                                                     |
+|  array  --> recurse each item with indexed path     |
+|  object --> recurse each key with dot-notation      |
++-----------------------------------------------------+
+         |
+         v
+  Translated<T, Excluded, Lang>  <- fully typed result
+```
+
+**Key behaviours:**
+- Each translatable string is one `batchLocalizeText` call — all target languages returned at once, not one call per language
+- Circular references are tracked via a `seen: Set<object>` and safely skipped
+- `exclude` paths support dot-notation (`"author.email"`), array wildcards (`"tags[]"`), and nested array fields (`"posts[].id"`)
+
+## How Lingo.dev is used
+
+Mango.dev doesn't implement any translation logic itself. Under the hood it uses `LingoDotDevEngine` from the [lingo.dev SDK](https://lingo.dev):
+
+```
+new Mango({ api_key, langs })
+        |
+        v
+  LingoDotDevEngine          <- from "lingo.dev/sdk"
+        |
+        +-- handles API communication
+        +-- batches strings for efficiency
+        +-- retries on failure
+        +-- batchLocalizeText(value, { sourceLocale, targetLocales })
+```
+
+Mango.dev's job is the layer on top — traversing your object tree, deciding what to skip, mapping results back to the original shape, and exposing a type-safe TypeScript API. The actual AI translation is entirely handled by Lingo.dev.

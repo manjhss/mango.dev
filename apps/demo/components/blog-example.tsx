@@ -70,7 +70,7 @@ export function BlogExample({
         Back
       </button>
 
-      <header className="flex flex-col gap-4 sm:flex-row items-start justify-between border-b border-dashed pb-4">
+      <header className="flex flex-col gap-4 sm:flex-row items-start justify-between mt-1">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">
             <span className="text-3xl">🥭</span> {t("header.title")}
@@ -88,7 +88,7 @@ export function BlogExample({
         ))}
       </ExampleWrapper>
 
-      <footer className="text-center text-xs text-muted-foreground">
+      <footer className="text-center text-sm text-muted-foreground">
         {t("footer.builtBy")}{" "}
         <Link
           href="https://x.com/manjhss"

@@ -247,7 +247,7 @@ export default function Page() {
           ))}
 
           {/* Footer */}
-          <footer className="text-center text-xs text-muted-foreground pt-8">
+          <footer className="text-center text-sm text-muted-foreground pt-8">
             Built by{" "}
             <Link
               href="https://x.com/manjhss"

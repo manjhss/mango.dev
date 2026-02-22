@@ -182,7 +182,7 @@ export default function Page() {
               className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-8 px-5 py-4 hover:bg-muted/40 transition-colors items-center"
             >
               <div className="text-base font-mono shrink-0">
-                <Link href={pkg.link} className="font-semibold text-mango-primary underline">{pkg.name}</Link>
+                <Link href={pkg.link} className="font-semibold text-mango-primary-foreground underline">{pkg.name}</Link>
               </div> -
 
               <p className="text-base text-muted-foreground">{pkg.description}</p>

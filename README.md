@@ -2,6 +2,8 @@
 
 A type-safe multilingual translation library powered by [lingo.dev](https://lingo.dev). Translate any JavaScript object into multiple languages in one call — with full TypeScript support.
 
+**[Live Demo →](https://mangodotdev.vercel.app/en/blogs)** &nbsp;·&nbsp; **[Demo Video →](https://youtu.be/tdi7jItnJWw)**
+
 ## How it works
 
 Mango.dev follows a clear backend/frontend split:
@@ -137,3 +139,10 @@ See individual package docs for full configuration options:
 ## Security
 
 Never use `@mango.dev/core` in client-side (browser) code — the `api_key` will be exposed in your bundle. Always call `mango.translate()` in a server action, API route, or build script. See the [`@mango.dev/core` security guide](./packages/core/README.md#security) for safe patterns.
+
+---
+
+Thanks to [Lingo.dev](https://lingo.dev) for running the Multilingual Hackathon #2 - this project wouldn't exist without it. If you find Mango.dev useful or have feedback, feel free to reach out.
+
+**[@manjhss on X →](https://x.com/manjhss)**
+

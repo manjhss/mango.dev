@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mango — Multilingual Blog",
-  description: "A demo of the Mango translation library powering a multilingual.",
+  title: "Mango.dev",
+  description: "A type-safe multilingual translation library. Translate any JavaScript object into multiple languages — one call, all langs. Built on lingo.dev.",
 };
 
 export default async function RootLayout({

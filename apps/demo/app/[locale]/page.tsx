@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -69,6 +70,11 @@ const PACKAGES = [
     description: "React bindings for Mango.dev, including MangoProvider and useMango hook.",
   },
 ];
+
+export const metadata: Metadata = {
+  title: "Mango.dev — Type-safe Multilingual Translations",
+  description: "Translate any JavaScript object into multiple languages — one call, all langs. Built on lingo.dev. Fully type-safe.",
+};
 
 export default function Page() {
   return (

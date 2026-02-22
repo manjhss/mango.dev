@@ -10,7 +10,7 @@ export default function Page() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/posts")
+    fetch("/api/posts", { cache: "force-cache" })
       .then((res) => res.json())
       .then(({ data, status, message }) => {
         if (status === "error") throw new Error(message);
